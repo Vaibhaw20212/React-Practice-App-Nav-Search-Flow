@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+
+import PokemonList from "./PokemonList"; // adjust path if needed
+
 import {
   TextField,
   Button,
@@ -92,28 +95,12 @@ export default function PokemonSearch() {
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
 
-      {/* List from Redux */}
-      {pokemonList.map((pokemon) => (
-        <Accordion key={pokemon.name}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box display="flex" justifyContent="space-between" width="100%" alignItems="center">
-              <Typography>{pokemon.name.toUpperCase()}</Typography>
-              <Checkbox
-                icon={<CloseIcon />}
-                checkedIcon={<CloseIcon />}
-                checked={selected.has(pokemon.name)}
-                onChange={() => toggleSelected(pokemon.name)}
-              />
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <img src={pokemon.sprites.front_default} alt={pokemon.name} width="100" />
-            <Typography><strong>Height:</strong> {pokemon.height}</Typography>
-            <Typography><strong>Weight:</strong> {pokemon.weight}</Typography>
-            <Typography><strong>Types:</strong> {pokemon.types.map(t => t.type.name).join(", ")}</Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+        <PokemonList
+            pokemonList={pokemonList}
+            selected={selected}
+            toggleSelected={toggleSelected}
+        />
+
 
       {selected.size > 0 && (
         <Box mt={2}>

@@ -1,7 +1,23 @@
 import React from "react";
+import { Box } from "@mui/material";
+import Sidebar from "../components/Sidebar";
+import FlowCanvas from "../components/FlowCanvas";
+import { DnDProvider } from "../context/DnDContext";
+import { ReactFlowProvider } from "@xyflow/react";
 
-function Playground() {
-  return <h1 className="text-2xl font-bold p-4">Playground Page Opening</h1>;
+export default function Playground() {
+  return (
+    <DnDProvider>
+      <ReactFlowProvider>
+        <Box display="flex" height="100vh">
+          <Box sx={{ width: 250, p: 2, borderRight: "1px solid #ccc" }}>
+            <Sidebar />
+          </Box>
+          <Box flex={1}>
+            <FlowCanvas />
+          </Box>
+        </Box>
+      </ReactFlowProvider>
+    </DnDProvider>
+  );
 }
-
-export default Playground;

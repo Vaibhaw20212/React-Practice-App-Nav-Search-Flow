@@ -9,12 +9,35 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
+import { useLocation } from "react-router-dom";
 
 export default function PokemonList({ pokemonList, selected, toggleSelected }) {
+  const location = useLocation();
+  const isPlayground = location.pathname === "/playground";
+
   return (
     <>
       {pokemonList.map((pokemon) => (
-        <Accordion key={pokemon.name}>
+        <Accordion
+          key={pokemon.name}
+          draggable={isPlayground}
+          onDragStart={(e) => {
+            if (!isPlayground) return;
+
+            // Set transfer data to be used by React Flow
+            e.dataTransfer.setData(
+              "application/reactflow",
+              JSON.stringify({
+                name: pokemon.name,
+                image: pokemon.sprites.front_default,
+                height: pokemon.height,
+                weight: pokemon.weight,
+                types: pokemon.types.map((t) => t.type.name),
+              })
+            );
+            e.dataTransfer.effectAllowed = "move";
+          }}
+        >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Box
               display="flex"

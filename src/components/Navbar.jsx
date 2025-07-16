@@ -27,7 +27,7 @@ function Navbar() {
               setLocation("/");
             }}
           >
-            Page 1
+            Searcher
           </Button>
           <Button
             color={location.pathname === "/playground" ? "primary" : "inherit"}
@@ -37,7 +37,7 @@ function Navbar() {
               setLocation("/playground");
             }}
           >
-            Page 2
+            Playground
           </Button>
           <Button
             color={location.pathname === "/bitcoin-chart" ? "primary" : "inherit"}

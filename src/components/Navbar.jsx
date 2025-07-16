@@ -39,6 +39,16 @@ function Navbar() {
           >
             Page 2
           </Button>
+          <Button
+            color={location.pathname === "/bitcoin-chart" ? "primary" : "inherit"}
+            variant={location.pathname === "/bitcoin-chart" ? "outlined" : "text"}
+            onClick={() => {
+              history.push("/bitcoin-chart");
+              setLocation("/bitcoin-chart");
+            }}
+          >
+            Bitcoin Chart
+          </Button>
         </div>
       </Toolbar>
     </AppBar>

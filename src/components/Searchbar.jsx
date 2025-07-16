@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import PokemonList from "./PokemonList"; // adjust path if needed
+import { POKEMON_NAMES } from "./pokemonNames";
 
 import {
   TextField,
@@ -12,7 +13,8 @@ import {
   CircularProgress,
   Box,
   Checkbox,
-  IconButton
+  IconButton,
+  Autocomplete
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
@@ -81,11 +83,19 @@ export default function PokemonSearch() {
     <Box sx={{ mt: 4 }}>
       {/* Search Input */}
       <Box display="flex" gap={2} mb={3}>
-        <TextField
-          label="Search Pokémon"
-          variant="outlined"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+        <Autocomplete
+          freeSolo
+          options={POKEMON_NAMES}
+          inputValue={input}
+          onInputChange={(_, newInput) => setInput(newInput)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search Pokémon"
+              variant="outlined"
+            />
+          )}
+          sx={{ width: 250, mr: 2 }}
         />
         <Button variant="contained" onClick={handleSearch}>
           Search

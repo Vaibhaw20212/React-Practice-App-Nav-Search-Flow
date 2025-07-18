@@ -17,62 +17,67 @@ export default function PokemonList({ pokemonList, selected, toggleSelected }) {
 
   return (
     <>
-      {pokemonList.map((pokemon) => (
-        <Accordion
-          key={pokemon.name}
-          draggable={isPlayground}
-          onDragStart={(e) => {
-            if (!isPlayground) return;
+      {pokemonList.map((pokemon) => {
+        const displayName =
+          pokemon.name.charAt(0).toUpperCase() +
+          pokemon.name.slice(1).toLowerCase();
+        return (
+          <Accordion
+            key={pokemon.name}
+            draggable={isPlayground}
+            onDragStart={(e) => {
+              if (!isPlayground) return;
 
-            // Set transfer data to be used by React Flow
-            e.dataTransfer.setData(
-              "application/reactflow",
-              JSON.stringify({
-                name: pokemon.name,
-                image: pokemon.sprites.front_default,
-                height: pokemon.height,
-                weight: pokemon.weight,
-                types: pokemon.types.map((t) => t.type.name),
-              })
-            );
-            e.dataTransfer.effectAllowed = "move";
-          }}
-        >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              width="100%"
-            >
-              <Typography>{pokemon.name.toUpperCase()}</Typography>
-              <Checkbox
-                icon={<CloseIcon />}
-                checkedIcon={<CloseIcon />}
-                checked={selected.has(pokemon.name)}
-                onChange={() => toggleSelected(pokemon.name)}
+              // Set transfer data to be used by React Flow
+              e.dataTransfer.setData(
+                "application/reactflow",
+                JSON.stringify({
+                  name: pokemon.name,
+                  image: pokemon.sprites.front_default,
+                  height: pokemon.height,
+                  weight: pokemon.weight,
+                  types: pokemon.types.map((t) => t.type.name),
+                })
+              );
+              e.dataTransfer.effectAllowed = "move";
+            }}
+          >
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                width="100%"
+              >
+                <Typography>{displayName}</Typography>
+                <Checkbox
+                  icon={<CloseIcon />}
+                  checkedIcon={<CloseIcon />}
+                  checked={selected.has(pokemon.name)}
+                  onChange={() => toggleSelected(pokemon.name)}
+                />
+              </Box>
+            </AccordionSummary>
+            <AccordionDetails>
+              <img
+                src={pokemon.sprites.front_default}
+                alt={pokemon.name}
+                width="100"
               />
-            </Box>
-          </AccordionSummary>
-          <AccordionDetails>
-            <img
-              src={pokemon.sprites.front_default}
-              alt={pokemon.name}
-              width="100"
-            />
-            <Typography>
-              <strong>Height:</strong> {pokemon.height}
-            </Typography>
-            <Typography>
-              <strong>Weight:</strong> {pokemon.weight}
-            </Typography>
-            <Typography>
-              <strong>Types:</strong>{" "}
-              {pokemon.types.map((t) => t.type.name).join(", ")}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+              <Typography>
+                <strong>Height:</strong> {pokemon.height}
+              </Typography>
+              <Typography>
+                <strong>Weight:</strong> {pokemon.weight}
+              </Typography>
+              <Typography>
+                <strong>Types:</strong>{" "}
+                {pokemon.types.map((t) => t.type.name).join(", ")}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
     </>
   );
 }

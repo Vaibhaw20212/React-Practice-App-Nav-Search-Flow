@@ -77,6 +77,7 @@ export default function PokemonSearch() {
   const handleRemoveSelected = () => {
     dispatch(removeSelected([...selected])); // send array of names
     setSelected(new Set()); // clear local selection state
+    console.log("Removed selected Pokémon:", [...selected]);
   };
 
   return (

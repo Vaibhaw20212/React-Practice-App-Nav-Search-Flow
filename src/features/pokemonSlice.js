@@ -13,6 +13,7 @@ const pokemonSlice = createSlice({
       const alreadyExists = state.list.some((p) => p.name === action.payload.name);
       if (!alreadyExists) {
         state.list.push(action.payload);
+        console.log("Added Pokémon:", action.payload.name);
       }
     },
     removeSelected: (state, action) => {

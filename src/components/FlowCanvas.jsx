@@ -57,7 +57,7 @@ export default function FlowCanvas() {
 
         newNode = {
           id: getId(),
-          type: "default", // You can customize later to custom type
+          type: "default", // default node stye
           position,
           data: {
             label: (

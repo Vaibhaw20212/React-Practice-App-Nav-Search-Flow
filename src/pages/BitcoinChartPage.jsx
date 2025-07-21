@@ -30,7 +30,7 @@ export default function BitcoinChartPage() {
       // For chart, use market_chart/range with timestamps
       const from = Math.floor(new Date(`${yyyy}-${mm}-${dd}T00:00:00Z`).getTime() / 1000);
       const to = Math.floor(new Date(`${yyyy}-${mm}-${dd}T23:59:59Z`).getTime() / 1000);
-      const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=usd&from=${from}&to=${to}`;
+      const url = `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart/range?vs_currency=inr&from=${from}&to=${to}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch data");
       const data = await res.json();
@@ -39,7 +39,7 @@ export default function BitcoinChartPage() {
         labels: data.prices.map(([ts]) => new Date(ts).toLocaleTimeString()),
         datasets: [
           {
-            label: "BTC Price (USD)",
+            label: "BTC Price (INR)",
             data: data.prices.map(([, price]) => price),
             borderColor: "#f7931a",
             backgroundColor: "rgba(247,147,26,0.1)",
@@ -56,7 +56,6 @@ export default function BitcoinChartPage() {
 
   React.useEffect(() => {
     fetchData(date);
-    // eslint-disable-next-line
   }, [date]);
 
   // Save date to localStorage on change
@@ -76,6 +75,7 @@ export default function BitcoinChartPage() {
             value={date}
             onChange={(newDate) => newDate && setDate(newDate)}
             maxDate={new Date()}
+            format="dd/MM/yyyy"
           />
         </Paper>
         {loading && <Typography align="center">Loading...</Typography>}
@@ -85,7 +85,7 @@ export default function BitcoinChartPage() {
             <Line data={chartData} options={{
               responsive: true,
               plugins: { legend: { display: true, position: "top" } },
-              scales: { x: { title: { display: true, text: "Time" } }, y: { title: { display: true, text: "USD" } } },
+              scales: { x: { title: { display: true, text: "Time" } }, y: { title: { display: true, text: "INR" } } },
             }} />
           </Paper>
         )}
